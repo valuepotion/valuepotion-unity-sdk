@@ -36,29 +36,29 @@ ValuePotionUnity.unitypackage
 
 ###### 1. ValuePotionUnity.unitypackage 를 import 합니다.
 
-![스크린샷](../images/1_import.png?raw=true =300x)
+![스크린샷](./images/1_import.png?raw=true =300x)
 
-![스크린샷](../images/2_select_package.png?raw=true =300x)
+![스크린샷](./images/2_select_package.png?raw=true =300x)
 
-![스크린샷](../images/3_import_result.png?raw=true =300x)
+![스크린샷](./images/3_import_result.png?raw=true =300x)
 
 ###### 2. Scene에 GameObject 삽입
 
-![스크린샷](../images/4_create_gameobject.png?raw=true =300x)
+![스크린샷](./images/4_create_gameobject.png?raw=true =300x)
 
-![스크린샷](../images/5_result_create.png?raw=true =300x)
+![스크린샷](./images/5_result_create.png?raw=true =300x)
 
 ##### 4. GameObject 를 ValuePotionManager 로 변경
-![스크린샷](../images/6_rename_object.png?raw=true =300x)
+![스크린샷](./images/6_rename_object.png?raw=true =300x)
 
 ##### 5. ValuePotionManager 의 Script 연결
-![스크린샷](../images/7_link_script.png?raw=true =300x)
+![스크린샷](./images/7_link_script.png?raw=true =300x)
 
 ##### 6. 모바일 OS별 Client Key 와 Secret Key 의 설정*
-![스크린샷](../images/8_fill_info.png?raw=true =300x)
+![스크린샷](./images/8_fill_info.png?raw=true =300x)
 
 ##### 7. ValuePotionManager를 Project Asset 창으로 끌어서 Prefab 으로 생성하여 Scene별로 재사용
-![스크린샷](../images/9_make_prefab.png?raw=true =300x)
+![스크린샷](./images/9_make_prefab.png?raw=true =300x)
 
 ## 기본 연동
 
@@ -104,7 +104,7 @@ ValuePotion SDK는 현재 Android와 iOS를 지원합니다.
 
 Unity 프로젝트에서 Xcode 프로젝트로 export한 이후에는, 정상적으로 앱을 빌드하기 위해 추가 빌드 세팅이 필요합니다.
 다음과 같이 Build Settings > Other Linker Flags 항목에서 \-ObjC 플래그를 추가합니다.
-![스크린샷](../images/10_ios_build_setting.png?raw=true =920x)
+![스크린샷](./images/10_ios_build_setting.png?raw=true =920x)
 
 #### SDK 초기화/종료
 

@@ -36,19 +36,29 @@ ValuePotionUnity.unitypackage
 
 ###### 1. ValuePotionUnity.unitypackage 를 import 합니다.
 
-![스크린샷](../images/1_import.png =300x)
+![스크린샷](../images/1_import.png?raw=true =300x)
 
-![스크린샷](../images/2_select_package.png =300x)
+![스크린샷](../images/2_select_package.png?raw=true =300x)
 
-![스크린샷](../images/3_import_result.png =300x)
+![스크린샷](../images/3_import_result.png?raw=true =300x)
 
 ###### 2. Scene에 GameObject 삽입
 
+![스크린샷](../images/4_create_gameobject.png?raw=true =300x)
 
-![스크린샷](../images/4_create_gameobject.png =300x)
+![스크린샷](../images/5_result_create.png?raw=true =300x)
 
-7. ValuePotionManager를 Project Asset 창으로 끌어서 Prefab 으로 생성하여 Scene별로 재사용
-![스크린샷](../images/9_make_prefab.png =300x)
+##### 4. GameObject 를 ValuePotionManager 로 변경
+![스크린샷](../images/6_rename_object.png?raw=true =300x)
+
+##### 5. ValuePotionManager 의 Script 연결
+![스크린샷](../images/7_link_script.png?raw=true =300x)
+
+##### 6. 모바일 OS별 Client Key 와 Secret Key 의 설정*
+![스크린샷](../images/8_fill_info.png?raw=true =300x)
+
+##### 7. ValuePotionManager를 Project Asset 창으로 끌어서 Prefab 으로 생성하여 Scene별로 재사용
+![스크린샷](../images/9_make_prefab.png?raw=true =300x)
 
 ## 기본 연동
 
@@ -94,7 +104,7 @@ ValuePotion SDK는 현재 Android와 iOS를 지원합니다.
 
 Unity 프로젝트에서 Xcode 프로젝트로 export한 이후에는, 정상적으로 앱을 빌드하기 위해 추가 빌드 세팅이 필요합니다.
 다음과 같이 Build Settings > Other Linker Flags 항목에서 \-ObjC 플래그를 추가합니다.
-![스크린샷](../images/10_ios_build_setting.png =920x)
+![스크린샷](../images/10_ios_build_setting.png?raw=true =920x)
 
 #### SDK 초기화/종료
 
@@ -149,20 +159,21 @@ ValuePotionManager.SetUserInfo(userInfo);
 
 ##### 추가 정보 항목
 
-- userId: 게임 내에서 사용되는 사용자의 계정 id를 설정합니다.
-- serverId: 사용자가 속한 서버 id를 설정합니다.
--- serverId를 기준으로 서버별 통계를 확인할 수 있습니다. 
-- level: 사용자의 게임 level을 설정합니다.
-- gender: 남성인 경우 @"M", 여성인 경우 @"F" 문자열로 설정합니다.
-- birth: 사용자의 생년월일 8자리를 문자열로 설정합니다.
--- 연도 정보만 아는 경우 "19840000"과 같이 생일 4자리를 0으로 채워 설정합니다.
--- 생일 정보만 아는 경우 "00001109"와 같이 연도 4자리를 0으로 채워 설정합니다.
-- friends: 사용자의 친구수를 설정합니다.
-
+이름           | 설명
+-------------- | ------------
+userId         | 게임 내에서 사용되는 사용자의 계정 id를 설정합니다. 반드시 세팅되어야 합니다. (required)
+serverId       | 게임 유저를 서버 별로 식별해야 하는 경우 유저가 속한 서버의 id를 설정합니다. (optional)
+               | serverId를 기준으로 서버별 통계를 확인할 수 있습니다.
+birth          | 사용자의 생년월일 8자리를 문자열로 세팅합니다. (optional)
+               | 연도 정보만 아는 경우 "19840000"과 같이 생일 4자리를 0으로 채웁니다.
+               | 생일 정보만 아는 경우 "00001109"와 같이 연도 4자리를 0으로 채웁니다.
+gender         | 남성인 경우 "M", 여성인 경우 "F" 문자열로 할당합니다. (optional)
+level          | 사용자의 게임 level을 설정합니다.(optional)
+friends        | 사용자의 친구수를 설정합니다.(optional)
 
 ## 캠페인 연동
 
-[valuepotion|http://valuepotion.com]에서 생성한 캠페인을 interstitial 형태로 앱에 노출시킬 수 있습니다.
+[valuepotion.com](http://valuepotion.com)에서 생성한 캠페인을 interstitial 형태로 앱에 노출시킬 수 있습니다.
 모든 interstitial은 로케이션 단위로 관리되며, 로케이션 이름은 정해진 규칙 없이 자유롭게 할당하실 수 있습니다.
 
 #### interstitial 캐싱하기

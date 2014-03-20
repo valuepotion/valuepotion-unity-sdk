@@ -34,21 +34,21 @@ ValuePotionUnity.unitypackage
 
 ##### SDK 파일 복사
 
-h6. 1. ValuePotionUnity.unitypackage 를 import 합니다.
+###### 1. ValuePotionUnity.unitypackage 를 import 합니다.
 
-[스크린샷](../images/1_import.png =300x)
+![스크린샷](../images/1_import.png =300x)
 
-[스크린샷](../images/2_select_package.png =300x)
+![스크린샷](../images/2_select_package.png =300x)
 
-[스크린샷](../images/3_import_result.png =300x)
+![스크린샷](../images/3_import_result.png =300x)
 
-h6. 2. Scene에 GameObject 삽입
+###### 2. Scene에 GameObject 삽입
 
 
-[스크린샷](../images/4_create_gameobject.png =300x)
+![스크린샷](../images/4_create_gameobject.png =300x)
 
 7. ValuePotionManager를 Project Asset 창으로 끌어서 Prefab 으로 생성하여 Scene별로 재사용
-[스크린샷](../images/9_make_prefab.png =300x)
+![스크린샷](../images/9_make_prefab.png =300x)
 
 ## 기본 연동
 
@@ -56,11 +56,11 @@ h6. 2. Scene에 GameObject 삽입
 
 ValuePotion SDK는 현재 Android와 iOS를 지원합니다.
 
-h6. Android 빌드 세팅
+###### Android 빌드 세팅
 
-# PlugIns/Android/README.md 파일의 Activity 항목들과 Permission을 본 프로젝트의 AndroidManifest.xml 에 복사합니다.
-# VPUnityActivity 를 바로 사용 또는 상속하거나,
-# 기존 Acitivity 의 onStart(), onStop(), onActivityResult() 를 오버라이드 하여 아래와 같이 설정해줍니다.
+- PlugIns/Android/README.md 파일의 Activity 항목들과 Permission을 본 프로젝트의 AndroidManifest.xml 에 복사합니다.
+- VPUnityActivity 를 바로 사용 또는 상속하거나,
+- 기존 Acitivity 의 onStart(), onStop(), onActivityResult() 를 오버라이드 하여 아래와 같이 설정해줍니다.
 
 ```xml
     @Override
@@ -90,11 +90,11 @@ h6. Android 빌드 세팅
 
 
 
-h6. iOS 빌드 세팅
+###### iOS 빌드 세팅
 
 Unity 프로젝트에서 Xcode 프로젝트로 export한 이후에는, 정상적으로 앱을 빌드하기 위해 추가 빌드 세팅이 필요합니다.
 다음과 같이 Build Settings > Other Linker Flags 항목에서 \-ObjC 플래그를 추가합니다.
-[스크린샷](../images/10_ios_build_setting.png =920x)
+![스크린샷](../images/10_ios_build_setting.png =920x)
 
 #### SDK 초기화/종료
 
@@ -301,20 +301,20 @@ Dictionary<string, double> eventInfo = new Dictionary<string, double>();
 eventInfo.Add("level", 30);
 eventInfo.Add("play_time", 67.71);
 ValuePotionManager.TrackEvent("play_end", eventInfo);
-{code}
+```
 
 특별한 값이 존재하지 않는 이벤트인 경우 이벤트 이름만 넘기면 됩니다.
-{code}
-ValuePotionManager.TrackEvent("test_event2");
 
+```java
+ValuePotionManager.TrackEvent("test_event2");
 ```
 
 #### 결제 이벤트 전송하기
 
-결제 이벤트는 게임 내 구매(in app billing / in app purchase)가 발생했을 때 사용되는 이벤트입니다.
+결제 이벤트는 게임 내 구매(In App Billing / In App Purchase)가 발생했을 때 사용되는 이벤트입니다.
 결제 이벤트를 전송하기 위해서는 TrackPurchaseEvent() Method를 사용합니다.
 기본적으로 eventName 과 revenueAmount, currency 의 3가지 인자(Arguments)가 필요한 Method와
-IAP 캠페인을 통한 트래킹일 경우에 사용하는 productId, campaignId, contentId의 3개의 인자를 추가로 전송하는 6개 인자 Method가 있습니다. 
+IAP 캠페인을 통한 트래킹일 경우에 사용하는 productId, campaignId, contentId의 3개의 인자를 추가로 전송하는 6개 인자 Method가 있습니다.
 결제 이벤트를 전송하면 앱 별 매출 리포트 집계가 가능합니다.
 다음은 결제 이벤트를 전송하는 예제입니다.
 
@@ -344,7 +344,7 @@ public void OnRequestPurchaseHandler(string location, string name, string produc
 ValuePotionManager.TrackPurchaseEvent("wing_purchase", 1.99, "USD", lastProductId, lastCampaignId, lastContentId);
 ```
 
-만약 IAP 캠페인을 거치지 않은 경우에 productId 별로 데이터를 보내고 싶을때에는 
+만약 IAP 캠페인을 거치지 않은 경우에 productId 별로 데이터를 보내고 싶을때에는
 아래와 같이 productId를 직접 전달하면 됩니다.
 ```java
 ValuePotionManager.TrackPurchaseEvent("wing_purchase", 1.99, "USD", "item_02_wing_2ea", null, null);

@@ -399,7 +399,7 @@ README.md 에 있는 GCM 관련 항목들도 함께 AndroidManifest.xml 에 넣�
 
 README.md 에 있는 GCM 관련 항목들은 AndroidManifest.xml 에 넣지 않습니다.
 
-1. GCMIntentService 클래스에서 다음과 같이 구현합니다.
+- GCMIntentService 클래스에서 다음과 같이 구현합니다.
 
 ```java
     @Override
@@ -420,7 +420,7 @@ README.md 에 있는 GCM 관련 항목들은 AndroidManifest.xml 에 넣지 않�
     }
 ```
 
-2. 다음과 같이 regID를 얻는 시점에 밸류포션으로 regID를 전송하도록 합니다.
+- 다음과 같이 regID를 얻는 시점에 밸류포션으로 regID를 전송하도록 합니다.
 
 ```java
   String regid = gcm.register(GCMIntentService.PROJECT_ID);

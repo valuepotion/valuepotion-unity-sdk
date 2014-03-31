@@ -128,7 +128,7 @@ void OnApplicationQuit() {
 ```
 
 
-ValuePotionManager.Destroy() 원하는 위치에서 사용하기를 원하는 경우에는,
+ValuePotionManager.Destroy()를 원하는 위치에서 사용하기를 원하는 경우에는,
 위 코드를 ValuePotionManager.cs 에서 주석처리하고,
 Application.Quit()의 호출전에 Destroy() 를 호출하여 세션의 종료를 즉시 알리도록 합니다.
 

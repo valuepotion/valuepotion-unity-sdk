@@ -441,11 +441,11 @@ README.md 에 있는 GCM 관련 항목들은 AndroidManifest.xml 에 넣지 않�
 ##### Push 기능의 On/Off
 
 ```java
-    public static void SetPushEnabled(bool enable)
+    public static void SetPushEnable(bool enable)
     public static bool IsPushEnabled()
 ```
 
-Push기능을 활성화 시키려면 true, 아니면 false를 넣어서 SetPushEnabled를 호출해주시면 되고,
+Push기능을 활성화 시키려면 true, 아니면 false를 넣어서 SetPushEnable을 호출해주시면 되고,
 현재의 Push 활성화 상태는 IsPushEnabled 를 통해서 true/false를 얻을 수 있습니다.
 
 내부구현 : 실제로는 Push를 받지만, Popup이나 Notification을 띄우지 않게끔 구현되어 있습니다.

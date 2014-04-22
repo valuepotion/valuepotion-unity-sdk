@@ -451,6 +451,24 @@ Push기능을 활성화 시키려면 true, 아니면 false를 넣어서 SetPushE
 내부구현 : 실제로는 Push를 받지만, Popup이나 Notification을 띄우지 않게끔 구현되어 있습니다.
 그래서 Push 프로모션의 발송대상에서 제외되지는 않습니다.
 
+##### Notification 의 사용
+
+```java
+    // Unity
+    ValuePotionManager.ShowNotification(int id, string title, string message, bool isPopup)
+	// Android
+	VPUnityBinder.showNotification(int id, String title, String message, boolean isPopup)
+```
+
+Push 프로모션에 이용되는 Popup 또는 Notification을 직접 띄울수 있는 메소드입니다.
+
+```
+	id : Notification 고유번호. 같은 id를 사용하면 이미 떠있던 Notification을 덮어쓴다.
+	title : 제목
+	message : 내용
+	isPopup : true일경우 Popup형, false일 경우에는 Notification형. 앱이 실행중일때 Popup형을 띄우게 되면, 자동으로 Notification으로 전환된다.
+```
+
 #### iOS
 
 Unity 프로젝트를 Xcode 프로젝트로 export 한 후, UnityAppController.mm 파일을 열어 다음과 같이 추가합니다.

@@ -255,7 +255,7 @@ Integrating with Unity GCM is based on [unity-gcm](https://github.com/kskkbys/un
 
 You can check out source code on [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion).
 
-If you don't want to use unity-gcm, you should refer to [this document](android_guide_en.md#integrate-push-notification) to handle GCM Push Notification on Android manually.
+If you don't want to use unity-gcm, you should refer to [this document](../../../valuepotion-android-sdk/blob/master/README.md#integrate-push-notification) to handle GCM Push Notification on Android manually.
 
 
 ##### AndroidManifest.xml

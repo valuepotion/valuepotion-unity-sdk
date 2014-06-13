@@ -254,7 +254,7 @@ ValuePotion의 Unity GCM 지원은 [unity-gcm](https://github.com/kskkbys/unity-
 
 소스코드는 [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion)에서 확인하실 수 있습니다.
 
-unity-gcm을 이용하지 않고, 직접 Android 소스코드에서 GCM Push Notification을 연동하고 싶은 경우에는 [이 문서](android_guide_ko.md#push-notification-%EC%97%B0%EB%8F%99)를 참고하세요.
+unity-gcm을 이용하지 않고, 직접 Android 소스코드에서 GCM Push Notification을 연동하고 싶은 경우에는 [이 문서](../../../valuepotion-android-sdk/blob/master/README.KO.md#push-notification-%EC%97%B0%EB%8F%99)를 참고하세요.
 
 
 ##### AndroidManifest.xml

@@ -3,7 +3,7 @@
 ## Before You Begin
 
 ### 1. Register Your App
-Visit [ValuePotion](https://valuepotion.com) website and register the information of your app. After that, you will be given a **Client ID** and a **Secret Key**.
+Visit [Valuepotion](https://valuepotion.com) website and register the information of your app. After that, you will be given a **Client ID** and a **Secret Key**.
 
 ### 2. Import the SDK into your Unity project
 Import **ValuepotionUnitySDK.unitypackage** from `Assets` > `Import Package` > `Custom Package` menu.
@@ -16,14 +16,140 @@ Import **ValuepotionUnitySDK.unitypackage** from `Assets` > `Import Package` > `
 
 ### 4. Setup Client ID and Secret Key
 
-Select **ValuePotionManager** object and type in Client ID and Secret Key at Inspector panel. If you're going to support both Android and iOS platforms, you will have different Client ID and Secret Key for each platform. You should visit [ValuePotion](https://valuepotion.com) website and create more if needed.
+Select **ValuePotionManager** object and type in Client ID and Secret Key at Inspector panel. If you're going to support both Android and iOS platforms, you will have different Client ID and Secret Key for each platform. You should visit [Valuepotion](https://valuepotion.com) website and create more if needed.
 
 After the setup, you can create a Prefab from this **ValuePotionManager** GameObject. Then you can reuse it at any scene by just dragging and dropping the Prefab to Hierarchy panel.
+
+### 5. Additional Integration with Android
+
+#### Basic Configuration
+
+##### Add Required Files
+
+First, check if your Android SDK contains `Android Support Library` and `Google Play Services`. If not, please install them from Android SDK Manager. After that, copy the following three files to your Unity Project.
+
+File Name        | File Path          | Destination Path
+-----------------|--------------------|-------------------------------
+**google-play-services.jar** | ANDROID_SDK_HOME/extras/google/google_play_services/libproject/google-play-services_lib/libs/google-play-services.jar | Assets/Plugins/Android/libs
+**android-support-v4.jar** | ANDROID_SDK_HOME/extras/android/support/v4/android-support-v4.jar | Assets/Plugins/Android/libs
+**version.xml** | ANDROID_SDK_HOME/extras/google/google_play_services/libproject/google-play-services_lib/res/values/version.xml | Assets/Plugins/Android/res/values
+
+
+##### AndroidManifest.xml
+
+###### Add google_play_services_version.
+```xml
+<meta-data android:name="com.google.android.gms.version"
+           android:value="@integer/google_play_services_version" />
+```
+
+###### Add permissions.
+```xml
+<!-- Valuepotion Plugin Permissions -->
+<uses-permission android:name="android.permission.INTERNET" />
+<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
+<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
+<uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<!-- Valuepotion Plugin Permissions end -->
+```
+
+###### Add components of Valuepotion.
+```xml
+<!-- Valuepotion Components -->
+	<!-- for GCM push-notification interface -->
+	<activity
+	    android:name="com.valuepotion.sdk.VPPopupActivity"
+	    android:launchMode="singleInstance"
+	    android:theme="@android:style/Theme.Translucent" >
+	</activity>
+
+	<!-- for GCM Push notification interface -->
+	<activity
+	    android:name="com.valuepotion.sdk.VPInterstitialActivity"
+	    android:theme="@android:style/Theme.Translucent" >
+	</activity>
+
+	<!-- for CPI tracking -->
+	<receiver
+	    android:name="com.valuepotion.sdk.VPInstallReceiver"
+	    android:exported="true" >
+	    <intent-filter>
+	        <action android:name="com.android.vending.INSTALL_REFERRER" />
+	    </intent-filter>
+	</receiver>
+<!-- Valuepotion Components End -->
+```
+
+#### Integrate with GCM
+
+
+Integrating with Unity GCM is based on [unity-gcm](https://github.com/kskkbys/unity-gcm) project. Via unity-gcm, we handle GCM Notification on Unity and integrate with Valuepotion.
+
+You can check out source code on [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion).
+
+##### Add gcm.jar
+Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity project. You can get `gcm.jar` from [here](https://code.google.com/p/gcm/source/browse/gcm-client/dist/gcm.jar?r=af0f427f11ec05c252d8424fffb9ff5521b59495).
+
+##### AndroidManifest.xml
+
+###### Add permissions for GCM
+
+```xml
+<!--
+	Replace 'PACKAGE_NAME' to Your App-PackageName
+	ex)
+    If 'package' attribute in <application> tag is 'com.valuepotion.testapp',
+    then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
+-->
+<permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
+<uses-permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE" />
+```
+
+###### Add components for GCM integration
+
+```xml
+<!--
+	Replace 'PACKAGE_NAME' to Your App-PackageName
+	ex)
+    If 'package' attribute in <application> tag is 'com.valuepotion.testapp',
+    then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
+-->
+<receiver android:name="com.kskkbys.unitygcmplugin.UnityGCMBroadcastReceiver"
+	andoid:permission="com.google.android.c2dm.permission.SEND"
+	android:exported="true">
+    <intent-filter>
+        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
+        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
+        <category android:name="PACKAGE_NAME" />
+    </intent-filter>
+</receiver>
+<service android:name="com.kskkbys.unitygcmplugin.UnityGCMIntentService" />
+```
+
+##### Unity Project
+
+###### Configure GCM Project-ID on Unity code.
+
+If you don't configure `project-id`, you won't be able to use GCM Push Notification.
+
+**This MUST be done**
+
+```java
+#if UNITY_ANDROID && !UNITY_EDITOR
+	GCM.Initialize ();
+	GCM.Register ("project-id(number format)");
+#endif
+```
+
+- If you don't want to use unity-gcm and want to handle GCM Push Notification on Android manually, you should refer to [this document](android_guide_en.md#integrate-push-notification).
+- To obtain Android GCM Project-ID and API-KEY, visit
+[http://developer.android.com/intl/ko/google/gcm/gs.html](http://developer.android.com/intl/ko/google/gcm/gs.html).
+- For the sample of AndroidManifest.xml, you can refer to `AndroidManifestSample.xml` from Valuepotion Unity SDK.
 
 
 ## Initialize SDK
 
-Initializing SDK can be done with just one line code. The earlier the initialization code are executed, the better. If you've done all right so far, you should be able to see statistics of session, install and update events on ValuePotion dashboard.
+Initializing SDK can be done with just one line code. The earlier the initialization code are executed, the better. If you've done all right so far, you should be able to see statistics of session, install and update events on Valuepotion dashboard.
 
 ```java
 ValuePotionManager.Initialize();
@@ -32,15 +158,15 @@ ValuePotionManager.Initialize();
 ## Integrate with Interstitial Ads
 
 ### 1. Display Interstitial Ads
-If you've created a campaign at [ValuePotion](https://valuepotion.com), you can display it as an interstitial ad at your own app. Before displaying interstitial ads, you should set up a location. Otherwise, "default" location will be used by default.
+If you've created a campaign at [Valuepotion](https://valuepotion.com), you can display it as an interstitial ad at your own app. Before displaying interstitial ads, you should set up a placement. Otherwise, "default" placement will be used by default.
 
-**Location** is a name to distinguish many points where you want to display ads. There's no restriction but it just should be a string.
+**Placement** is a name to distinguish many points where you want to display ads. There's no restriction but it just should be a string.
 
 ```java
-// Display ads at "default" location.
+// Display ads at "default" placement.
 ValuePotionManager.OpenInterstitial(null);
 
-// Display ads at "main_menu" location.
+// Display ads at "main_menu" placement.
 ValuePotionManager.OpenInterstitial("main_menu");
 ```
 
@@ -49,7 +175,7 @@ ValuePotionManager.OpenInterstitial("main_menu");
 Using `ValuePotionManager.OpenInterstitial()` method, the SDK will download data for ads via HTTP and display on screen. So it takes some time. If you cache ads when your game launches, you can display the ads at any time with no delay.
 
 ```java
-// If you cache an ad for "after_login" location once,
+// If you cache an ad for "after_login" placement once,
 ValuePotionManager.CacneInterstitial("after_login");
 
 ...
@@ -62,9 +188,9 @@ ValuePotionManager.OpenInterstitial("after_login");
 You can display interstitial ads only when caches are available.
 
 ```java
-// Check if the cache for "item_shop" location exists.
+// Check if the cache for "item_shop" placement exists.
 if (ValuePotionManager.HasCachedInterstitial("item_shop")) {
-	// then, display the ad for "item_shop" location.
+	// then, display the ad for "item_shop" placement.
 	ValuePotionManager.OpenInterstitial("item_shop");
 }
 ```
@@ -98,7 +224,7 @@ The following code is an example to send payment event occurred in your game.
 ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD");
 ```
 
-ValuePotion provides campaign of In-App Purchase (IAP) type. When a user makes revenue via an ad of IAP type, if you add extra info to payment event, you can get revenue report per campaign in detail. The following code is how to send payment event which occurred from IAP ad.
+Valuepotion provides campaign of In-App Purchase (IAP) type. When a user makes revenue via an ad of IAP type, if you add extra info to payment event, you can get revenue report per campaign in detail. The following code is how to send payment event which occurred from IAP ad.
 
 * To see more information about `ValuePotionManager.OnRequestPurchase`, please see **OnRequestPurchase** item under **Advanced: Event** section *
 
@@ -109,7 +235,7 @@ string lastContentId;
 
 ValuePotionManager.OnRequestPurchase += OnRequestPurchaseHandler;
 
-public void OnRequestPurchaseHandler(string location, string name, string productId, int quantity, string campaignId, string contentId) {
+public void OnRequestPurchaseHandler(string placement, string name, string productId, int quantity, string campaignId, string contentId) {
 	lastProductId = productId;
 	lastCampaignId = campaignId;
 	lastContentId = contentId;
@@ -135,7 +261,7 @@ You can test if event tracking works by using test mode of the SDK. The followin
 ValuePotionManager.SetTest(true);
 ```
 
-If you send events from an app built with test mode, you should see the events on developer's console at [ValuePotion](https://valuepotion.com) at real time.
+If you send events from an app built with test mode, you should see the events on developer's console at [Valuepotion](https://valuepotion.com) at real time.
 
 **Warning** : Before submitting your app to app store, please disable test mode. Events sent form test mode are only displayed on Developer's console but excluded from analysis.
 
@@ -144,7 +270,7 @@ If you send events from an app built with test mode, you should see the events o
 ## Integrate User Information
 You can collect user information as well as events. Possible fields of user information are user id, server id which user belongs to, birthdate, gender, level and number of friends. All of them are optional so you can choose which fields to collect.
 
-You can use this information for marketing by creating user cohort. You can update your information when it changes to integrate with ValuePotion.
+You can use this information for marketing by creating user cohort. You can update your information when it changes to integrate with Valuepotion.
 
 ```java
 ValuePotionManager.SetUserId("support@valuepotion.com");
@@ -171,7 +297,7 @@ Field         | Description
 If you integrate with Push Notification API, you can easily create campaigns of Push type and send message to users. So you can wake up users who haven't played game for long time, or you can also notify users new events in game, etc.
 
 ### 1. Register Certificate
-Visit [ValuePotion](https://valuepotion.com) website and update your app information.
+Visit [Valuepotion](https://valuepotion.com) website and update your app information.
 
 * **Android App** : Put **Push Token** at **App Edit** page.
 * **iOS App** : Upload Push Notification Certificate file(*.pem) at **App Edit** page.
@@ -201,118 +327,6 @@ If you want to know whether Push Notification is now enabled, run the following 
 ValuePotionManager.IsPushEnabled();
 ```
 
-### 3. Additional Integration with Android
-
-For Android, you should configure additional setting for components from ValuePotion and GCM Push Notification.
-
-#### Basic Configuration
-
-##### AndroidManifest.xml
-
-Add permissions.
-
-```xml
-<!-- ValuePotion Plugin Permissions -->
-<uses-permission android:name="android.permission.INTERNET" />
-<uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
-<uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
-<uses-permission android:name="android.permission.READ_PHONE_STATE" />
-<!-- ValuePotion Plugin Permissions end -->
-```
-
-Add components of ValuePotion.
-
-```xml
-<!-- ValuePotion Components -->
-	<!-- for GCM push-notification interface -->
-	<activity
-	    android:name="com.valuepotion.sdk.VPPopupActivity"
-	    android:launchMode="singleInstance"
-	    android:theme="@android:style/Theme.Translucent" >
-	</activity>
-
-	<!-- for GCM Push notification interface -->
-	<activity
-	    android:name="com.valuepotion.sdk.VPInterstitialActivity"
-	    android:theme="@android:style/Theme.Translucent" >
-	</activity>
-
-	<!-- for CPI tracking -->
-	<receiver
-	    android:name="com.valuepotion.sdk.VPInstallReceiver"
-	    android:exported="true" >
-	    <intent-filter>
-	        <action android:name="com.android.vending.INSTALL_REFERRER" />
-	    </intent-filter>
-	</receiver>
-<!-- ValuePotion Components End -->
-```
-
-#### Integrate with GCM
-
-
-Integrating with Unity GCM is based on [unity-gcm](https://github.com/kskkbys/unity-gcm) project. Via unity-gcm, we handle GCM Notification on Unity and integrate with Valuepotion.
-
-You can check out source code on [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion).
-
-If you don't want to use unity-gcm, you should refer to [this document](../../../valuepotion-android-sdk/blob/master/README.md#integrate-push-notification) to handle GCM Push Notification on Android manually.
-
-
-##### AndroidManifest.xml
-
-Add permissions for GCM
-
-```xml
-<!--
-	Replace 'PACKAGE_NAME' to Your App-PackageName
-	ex)
-    If 'package' attribute in <application> tag is 'com.valuepotion.testapp',
-    then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
--->
-<permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE" android:protectionLevel="signature" />
-<uses-permission android:name="PACKAGE_NAME.permission.C2D_MESSAGE" />
-```
-
-Add components for GCM integration
-
-```xml
-<!--
-	Replace 'PACKAGE_NAME' to Your App-PackageName
-	ex)
-    If 'package' attribute in <application> tag is 'com.valuepotion.testapp',
-    then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
--->
-<receiver android:name="com.kskkbys.unitygcmplugin.UnityGCMBroadcastReceiver"
-	andoid:permission="com.google.android.c2dm.permission.SEND"
-	android:exported="true">
-    <intent-filter>
-        <action android:name="com.google.android.c2dm.intent.RECEIVE" />
-        <action android:name="com.google.android.c2dm.intent.REGISTRATION" />
-        <category android:name="PACKAGE_NAME" />
-    </intent-filter>
-</receiver>
-<service android:name="com.kskkbys.unitygcmplugin.UnityGCMIntentService" />
-```
-
-##### Unity Project
-
-Configure GCM Project-ID on Unity code.
-
-If you don't configure '`project-id`, you won't be able to use GCM Push Notification.
-
-**This MUST be done**
-
-```java
-#if UNITY_ANDROID && !UNITY_EDITOR
-	GCM.Initialize ();
-	GCM.Register ("project-id(number format)");
-#endif
-```
-
-To obtain Android GCM Project-ID and API-KEY, visit
-[http://developer.android.com/intl/ko/google/gcm/gs.html](http://developer.android.com/intl/ko/google/gcm/gs.html).
-
-
 ## Build
 
 ### 1. Android
@@ -338,7 +352,7 @@ This event occurs when displaying interstitial ad is successfully done after cal
 
 ```java
 ValuePotionManager.OnOpenInterstitial += OnOpenInterstitialHandler;
-public void OnOpenInterstitialHandler(string location) {
+public void OnOpenInterstitialHandler(string placement) {
 	// Put something you need to do when interstitial ad is displayed.
 	// For example, you can pause game here.
 }
@@ -349,7 +363,7 @@ This event occurs when displaying interstitial ad is failed after calling `Value
 
 ```java
 ValuePotionManager.OnFailToOpenInterstitial += OnFailToOpenInterstitialHandler;
-public void OnFailToOpenInterstitialHandler(string location, string errorMessage) {
+public void OnFailToOpenInterstitialHandler(string placement, string errorMessage) {
 	// Put something you need to do when interstitial ad gets failed.
 	// You can check reason of failure via errorMessage variable.
 }
@@ -360,7 +374,7 @@ This event occurs when interstitial ad closes.
 
 ```java
 ValuePotionManager.OnCloseInterstitial += OnCloseInterstitialHandler;
-public void OnCloseInterstitialHandler(string location) {
+public void OnCloseInterstitialHandler(string placement) {
 	// Put something you need to do when interstitial ad closes.
 	// If you paused your game during ad is open, now you can resume it here.
 }
@@ -372,7 +386,7 @@ This event occurs when caching interstitial ad is successfully done after callin
 
 ```java
 ValuePotionManager.OnCacheInterstitial += OnCacheInterstitialHandler;
-public void OnCacheInterstitialHandler(string location) {
+public void OnCacheInterstitialHandler(string placement) {
 	// Put something you need to do when caching interstitial ad is successfully done
 }
 ```
@@ -382,7 +396,7 @@ This event occurs when caching interstitial ad is failed after calling `ValuePot
 
 ```java
 ValuePotionManager.OnFailToCacheInterstitial += OnFailToCacheInterstitialHandler;
-public void OnFailToCacheInterstitialHandler(string location, string errorMessage) {
+public void OnFailToCacheInterstitialHandler(string placement, string errorMessage) {
 	// Put something you need to do when caching interstitial ad is failed.
 	// You can check reason of failure via errorMessage variable.
 }
@@ -394,7 +408,7 @@ This event occurs when user clicks external url while interstitial ad is display
 
 ```java
 ValuePotionManager.OnRequestOpenUrl += OnRequestOpenUrlHandler;
-public void OnRequestOpenUrlHandler(string location, string url) {
+public void OnRequestOpenUrlHandler(string placement, string url) {
 	// Put something you need to do when external url gets opened.
 	// App soon goes background, so you can do something like saving user data, etc.
 }
@@ -405,7 +419,7 @@ This event occurs when user pressed 'Purchase' button while interstitial ad of I
 
 ```java
 ValuePotionManager.OnRequestPurchase += OnRequestPurchaseHandler;
-public void OnRequestPurchaseHandler(string location, string name, string productId, int quantity, string campaignId, string contentId) {
+public void OnRequestPurchaseHandler(string placement, string name, string productId, int quantity, string campaignId, string contentId) {
 	// Put codes to process real purchase by using parameters: productId, quantity.
 	// After purchase, call ValuePotionManager.TrackPurchaseEvent() method for revenue report.
 }
@@ -416,7 +430,7 @@ This event occurs when interstitial ad of Reward type is displayed.
 
 ```java
 ValuePotionManager.OnRequestReward += OnRequestRewardHandler;
-public void OnRequestRewardHandler(string location, Dictionary<string, object>[] rewards) {
+public void OnRequestRewardHandler(string placement, Dictionary<string, object>[] rewards) {
 	// Array 'rewards' contains rewards which ad is about to give users.
 	// With this information you should implement actual code to give rewards to users.
 	for (int i = 0; i < rewards.Length; i++) {

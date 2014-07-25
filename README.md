@@ -1,4 +1,4 @@
-# Valuepotion SKD for Unity - Getting Started
+# Valuepotion SDK for Unity - Getting Started
 
 ## Before You Begin
 
@@ -10,7 +10,7 @@ Import **ValuepotionUnitySDK.unitypackage** from `Assets` > `Import Package` > `
 
 ### 3. Create **ValuePotionManager** Object
 
-1. Create a GameObject from `GameObject` > `Create Empty` menu. 
+1. Create a GameObject from `GameObject` > `Create Empty` menu.
 2. Find the GameObject created at Hierarchy panel, then rename it to **ValuePotionManager**.
 3. Click Add Component button from Inspector panel to connect to **Value Potion Manager** script.
 

@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.16
+* Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.1
+
+#### Android
+* Fixed a bug that WebView doesn’t work properly after showing interstitial ad.
+* Fixed a bug that the unity binder delivers wrong event strings.
+
 ## v1.0.15
 * Built with valuepotion-android-sdk-1.0.15 and valuepotion-ios-sdk-1.0.1
 * Renamed “location” to “placement” from all variables and method names.

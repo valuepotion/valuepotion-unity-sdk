@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.0.17
+* Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.2
+
+#### iOS
+* iOS 8 support.
+
 ## v1.0.16
 * Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.1
 

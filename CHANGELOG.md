@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.0.19
+* Built with valuepotion-android-sdk-1.0.18 and valuepotion-ios-sdk-1.0.2
+
+#### Android
+* Fixed a bug that push token is not registered very occasionally.
+
 ## v1.0.18
 * Built with valuepotion-android-sdk-1.0.17 and valuepotion-ios-sdk-1.0.2
 

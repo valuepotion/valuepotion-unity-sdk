@@ -1,5 +1,11 @@
 # Change Log
 
+## v1.0.18
+* Built with valuepotion-android-sdk-1.0.17 and valuepotion-ios-sdk-1.0.2
+
+#### Android
+* Fixed a bug app crashing when users' android device does not have Google Play Services.
+
 ## v1.0.17
 * Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.2
 

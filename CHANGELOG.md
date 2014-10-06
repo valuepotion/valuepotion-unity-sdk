@@ -1,5 +1,13 @@
 # Change Log
 
+## v1.0.20
+* Built with valuepotion-android-sdk-1.0.19 and valuepotion-ios-sdk-1.0.2
+* New APIs
+```java
+  public static void SetNotificationLights(int argb, int onMs, int offMs)
+  public static void SetNotificationVibrate(long[] pattern)
+```
+
 ## v1.0.19
 * Built with valuepotion-android-sdk-1.0.18 and valuepotion-ios-sdk-1.0.2
 

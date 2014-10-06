@@ -439,3 +439,25 @@ public void OnRequestRewardHandler(string placement, Dictionary<string, object>[
 	}
 }
 ```
+
+## Misc.
+### 1. Push Notification LED (for Android)
+When users receive push notification and their phone screen is off, you can make the LED blink.
+```java
+  // When push notification is received, LED lamp will blink every 0.5 seconds.
+  ValuePotionManager.SetNotificationLights(0xff0000, 500, 500);
+```
+The code above will save its configuration in SharedPreference and the configuration will be used when user receives push notification. If you want to revert the configuration, please delete that code line. Then remove and install the app.
+
+### 2. Push Notification Vibration (for Android)
+You can customize vibration pattern when user receives push notification.
+```java
+  ValuePotionManager.SetNotificationVibrate(new long[] {0, 300, 500, 1000, 500, 400, 100});
+```
+The code above will save its configuration in SharedPreference and the configuration will be used when user receives push notification. If you want to revert the configuration, please delete that code line. Then remove and install the app. To see more about vibration pattern, please refer to [Android SDK document](http://developer.android.com/reference/android/os/Vibrator.html).
+
+To use notification vibration, you need to add the following permission.
+
+```xml
+  <uses-permission android:name="android.permission.VIBRATE" />
+```

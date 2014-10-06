@@ -434,3 +434,24 @@ public void OnRequestRewardHandler(string placement, Dictionary<string, object>[
 	}
 }
 ```
+
+## 기타 설정
+### 1. Push Notification LED 설정 (for Android)
+스마트폰의 화면이 꺼져있는 상태에서 Push 메시지를 받은 경우, LED가 점멸하도록 해 푸시 메시지가 수신된 것을 유저에게 알릴 수 있습니다.
+```java
+  // 푸시 메시지 수신 시 램프가 0.5초 간격으로 붉은색으로 점멸합니다.
+  ValuePotionManager.SetNotificationLights(0xff0000, 500, 500);
+```
+위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하신 후 앱을 삭제한 뒤 재설치하십시오.
+
+### 2. Push Notification 진동 설정 (for Android)
+Push 메시지 수신 지 울리는 진동의 패턴을 커스터마이징 할 수 있습니다.
+```java
+  ValuePotionManager.SetNotificationVibrate(new long[] {0, 300, 500, 1000, 500, 400, 100});
+```
+위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하신 후 앱을 삭제한 뒤 재설치하십시오. 진동 패턴에 대한 자세한 정보는 [안드로이드 SDK 공식 문서](http://developer.android.com/reference/android/os/Vibrator.html)를 참조하십시오.
+
+진동 설정을 커스터마이징 하기 위해서는 AndroidManifest.xml 파일에 아래와 같이 퍼미션을 추가해야 합니다.
+```xml
+  <uses-permission android:name="android.permission.VIBRATE" />
+```

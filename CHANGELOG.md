@@ -1,5 +1,21 @@
 # Change Log
 
+## v1.0.21
+* Built with valuepotion-android-sdk-1.0.20 and valuepotion-ios-sdk-1.0.3
+* New APIs
+```java
+  public static void TrackEvent(string eventName)
+  public static void TrackEvent(string category, string eventName, string label, double eventValue)
+  public static void TrackPurchaseEvent(string eventName, double revenueAmount, string currency, string orderId, string productId)
+  public static void SetUserAccountType(string accountType)
+```
+* Deprecated APIs
+```java
+  public static void TrackEvent(string eventName, Dictionary<string, double> eventValues)
+  public static void TrackPurchaseEvent(string eventName, double revenueAmount, string currency)
+  public static void SetUserInfo(Dictionary<string, string> userInfo)
+```
+
 ## v1.0.20
 * Built with valuepotion-android-sdk-1.0.19 and valuepotion-ios-sdk-1.0.2
 * New APIs

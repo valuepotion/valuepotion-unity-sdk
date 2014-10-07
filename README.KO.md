@@ -197,8 +197,8 @@ if (ValuePotionManager.HasCachedInterstitial("item_shop")) {
 비결제 이벤트는 게임 내 결제와 무관한 이벤트로, 주로 사용자 행태 분석을 위해 사용합니다. 비결제 이벤트 트래킹을 위해서는 이벤트의 이름과 값을 지정해야 합니다. 다음은 비결제 이벤트를 전송하는 예제입니다.
 
 ```java
-// 사용자가 3번째 스테이지를 클리어
-ValuePotionManager.TrackEvent("stage_clear", 3);
+// 사용자가 3개의 아이템을 획득
+ValuePotionManager.TrackEvent("get_item_ruby", 3);
 ```
 
 특별한 값이 필요치 않은 이벤트인 경우, 간단히 이벤트 이름만을 지정하여도 됩니다.
@@ -208,6 +208,16 @@ ValuePotionManager.TrackEvent("stage_clear", 3);
 ValuePotionManager.TrackEvent("enter_item_shop");
 ```
 
+이벤트에 계층을 두어 구분하고 싶을 때는 다음과 같이 사용할 수 있습니다.
+
+```java
+String category = "item";
+String action = "get_ruby";
+String label = "reward_for_login";
+double value = 30;
+ValuePotionManager.TrackEvent(category, action, label, value);
+```
+
 
 ### 2. 결제 이벤트 트래킹
 결제 이벤트는 게임 내 구매(In App Billing 또는 In App Purchase)가 발생했을 때 전송하는 이벤트입니다. 결제 이벤트를 트래킹하면 매출액, ARPU, ARPPU, PPU 등 유용한 지표들의 추이를 매일 확인할 수 있습니다.
@@ -215,7 +225,9 @@ ValuePotionManager.TrackEvent("enter_item_shop");
 
 ```java
 // 0.99 달러의 코인 아이템 구매가 발생
-ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD");
+String orderId = "23847983247018237";                 // 결제 성공 후 발행된 영수증 번호
+String productId = "com.valuepotion.tester.item_01";  // 아이템의 식별자
+ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD", orderId, productId);
 ```
 
 밸류포션은 In App Purchase (이하 IAP) 타입의 캠페인을 제공합니다. 게임 사용자가 IAP 타입의 광고를 통해 매출을 발생시킨 경우, 결제 이벤트에 추가 정보를 더해 전송하면 더욱 상세한 캠페인 별 매출 리포트를 제공 받으실 수 있습니다. 다음은 IAP 광고로부터 발생한 결제 이벤트를 전송하는 예제입니다.
@@ -223,23 +235,17 @@ ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD");
 *`ValuePotionManager.OnRequestPurchase` 이벤트에 대한 보다 자세한 정보는 **고급: 이벤트** 섹션의 **OnRequestPurchase** 항목을 참고하십시오.*
 
 ```java
-string lastProductId;
-string lastCampaignId;
-string lastContentId;
-
 ValuePotionManager.OnRequestPurchase += OnRequestPurchaseHandler;
 
 public void OnRequestPurchaseHandler(string placement, string name, string productId, int quantity, string campaignId, string contentId) {
-	lastProductId = productId;
-	lastCampaignId = campaignId;
-	lastContentId = contentId;
+  // 요청받은 결제를 진행합니다.
 
-	// 요청받은 결제를 진행합니다.
+  ...
 
-	...
-
-	// 1,200 원의 다이아몬드 아이템 구매가 발생. 최근에 요청받은 결제의 productId, campaignId, contentId 추가 전송.
-	ValuePotionManager.TrackPurchaseEvent("iap_diamond", 1200, "KRW", lastProductId, lastCampaignId, lastContentId);
+  // 1,200 원의 다이아몬드 아이템 구매가 발생.
+  String orderId = "23847983247018237";                 // 결제 성공 후 발행된 영수증 번호
+  String productId = "com.valuepotion.tester.item_01";  // 아이템의 식별자
+  ValuePotionManager.TrackPurchaseEvent("iap_diamond", 1200, "KRW", orderId, productId, campaignId, contentId);
 }
 ```
 
@@ -262,7 +268,7 @@ ValuePotionManager.SetTest(true);
 
 
 ## 사용자 정보 연동
-이벤트 트래킹과는 별도로, 게임 사용자의 추가 정보에 대한 수집이 가능합니다. 현재 밸류포션에서 지원하는 사용자 정보는 사용자의 계정 ID, 사용자가 속한 게임 서버의 ID, 생년월일, 성별, 레벨, 친구 수의 6가지입니다. 모든 항목은 선택적이므로, 필요치 않다면 어떤 것도 설정할 필요가 없습니다.
+이벤트 트래킹과는 별도로, 게임 사용자의 추가 정보에 대한 수집이 가능합니다. 현재 밸류포션에서 지원하는 사용자 정보는 사용자의 계정 ID, 사용자가 속한 게임 서버의 ID, 생년월일, 성별, 레벨, 친구 수, 계정 타입의 7가지입니다. 모든 항목은 선택적이므로, 필요치 않다면 어떤 것도 설정할 필요가 없습니다.
 
 이 정보들을 이용해 유저 코호트를 생성하여 마케팅에 활용할 수있습니다. 사용자 정보는 게임의 진행 중 변경이 있을 때마다 새로이 설정하여 주시면 자동으로 밸류포션과 연동됩니다.
 
@@ -273,18 +279,20 @@ ValuePotionManager.SetUserBirth("19830328");
 ValuePotionManager.SetUserGender("M");
 ValuePotionManager.SetUserLevel(32);
 ValuePotionManager.SetUserFriends(219);
+ValuePotionManager.SetUserAccountType("guest");
 ```
 
 각 사용자 정보 항목에 대한 세부 내용은 다음과 같습니다.
 
-이름            | 설명
--------------- | ------------
-**userId**    | 게임 내에서 사용되는 사용자의 계정 id를 설정합니다.
-**serverId**  | 게임 유저를 서버 별로 식별해야 하는 경우 유저가 속한 서버의 id를 설정합니다.<br>serverId를 기준으로 서버별 통계를 확인할 수 있습니다.
-**birth**     | 사용자의 생년월일 8자리를 문자열로 세팅합니다.<br>연도 정보만 아는 경우 "19840000"과 같이 뒤 4자리를 0으로 채웁니다.<br>생일 정보만 아는 경우 "00001109"와 같이 앞 4자리를 0으로 채웁니다.
-**gender**    | 남성인 경우 "M", 여성인 경우 "F" 문자열로 설정합니다.
-**level**     | 사용자의 게임 내 레벨을 설정합니다.
-**friends**   | 사용자의 친구 수를 설정합니다.
+이름             | 설명
+--------------- | ------------
+**userId**      | 게임 내에서 사용되는 사용자의 계정 id를 설정합니다.
+**serverId**    | 게임 유저를 서버 별로 식별해야 하는 경우 유저가 속한 서버의 id를 설정합니다.<br>serverId를 기준으로 서버별 통계를 확인할 수 있습니다.
+**birth**       | 사용자의 생년월일 8자리를 문자열로 세팅합니다.<br>연도 정보만 아는 경우 "19840000"과 같이 뒤 4자리를 0으로 채웁니다.<br>생일 정보만 아는 경우 "00001109"와 같이 앞 4자리를 0으로 채웁니다.
+**gender**      | 남성인 경우 "M", 여성인 경우 "F" 문자열로 설정합니다.
+**level**       | 사용자의 게임 내 레벨을 설정합니다.
+**friends**     | 사용자의 친구 수를 설정합니다.
+**accountType** | 사용자의 로그인 계정 타입을 설정합니다. (facebook, google, guest 등)
 
 
 ## Push Notification 연동
@@ -442,14 +450,14 @@ public void OnRequestRewardHandler(string placement, Dictionary<string, object>[
   // 푸시 메시지 수신 시 램프가 0.5초 간격으로 붉은색으로 점멸합니다.
   ValuePotionManager.SetNotificationLights(0xff0000, 500, 500);
 ```
-위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하신 후 앱을 삭제한 뒤 재설치하십시오.
+위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하고 앱을 삭제한 후 다시 설치하십시오.
 
 ### 2. Push Notification 진동 설정 (for Android)
-Push 메시지 수신 지 울리는 진동의 패턴을 커스터마이징 할 수 있습니다.
+Push 메시지 수신 시 울리는 진동의 패턴을 커스터마이징 할 수 있습니다.
 ```java
   ValuePotionManager.SetNotificationVibrate(new long[] {0, 300, 500, 1000, 500, 400, 100});
 ```
-위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하신 후 앱을 삭제한 뒤 재설치하십시오. 진동 패턴에 대한 자세한 정보는 [안드로이드 SDK 공식 문서](http://developer.android.com/reference/android/os/Vibrator.html)를 참조하십시오.
+위와 같이 사용하면 해당 설정이 SharedPreference에 저장되어 계속 사용됩니다. 만약 설정을 되돌리고 싶다면, 위 구문을 제거하고 앱을 삭제한 후 다시 설치하십시오. 진동 패턴에 대한 자세한 정보는 [안드로이드 SDK 공식 문서](http://developer.android.com/reference/android/os/Vibrator.html)를 참조하십시오.
 
 진동 설정을 커스터마이징 하기 위해서는 AndroidManifest.xml 파일에 아래와 같이 퍼미션을 추가해야 합니다.
 ```xml

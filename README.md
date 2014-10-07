@@ -203,8 +203,8 @@ You can analyze your game with event tracking. And based on events you can creat
 Non-payment event is not related to In-App Purchase. You can use non-payment event to analyze user behavior. To use non-payment event, you should define its name and values. The following code is an example to send non-payment event.
 
 ```java
-// User has been cleared 3rd stage.
-ValuePotionManager.TrackEvent("stage_clear", 3);
+// User has got 3 items.
+ValuePotionManager.TrackEvent("get_item_ruby", 3);
 ```
 
 If there's no specific value needed, you can use event name only.
@@ -214,6 +214,16 @@ If there's no specific value needed, you can use event name only.
 ValuePotionManager.TrackEvent("enter_item_shop");
 ```
 
+If you want to build a hierarchy of events, you can specify that like following:
+
+```java
+String category = "item";
+String action = "get_ruby";
+String label = "reward_for_login";
+double value = 30;
+ValuePotionManager.TrackEvent(category, action, label, value);
+```
+
 
 ### 2. Payment Event
 Payment event is tracked when In-App Purchase(In-App Billing) has occurred. If you track payment events, you can check daily statistics of Revenue, ARPU, ARPPU, PPU, etc.
@@ -221,7 +231,9 @@ The following code is an example to send payment event occurred in your game.
 
 ```java
 // User purchased $0.99 coin item.
-ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD");
+String orderId = "23847983247018237";                 // The identifier of receipt after completing purchase.
+String productId = "com.valuepotion.tester.item_01";  // The identifier of item.
+ValuePotionManager.TrackPurchaseEvent("purchase_coin", 0.99, "USD", orderId, productId);
 ```
 
 Valuepotion provides campaign of In-App Purchase (IAP) type. When a user makes revenue via an ad of IAP type, if you add extra info to payment event, you can get revenue report per campaign in detail. The following code is how to send payment event which occurred from IAP ad.
@@ -229,23 +241,17 @@ Valuepotion provides campaign of In-App Purchase (IAP) type. When a user makes r
 * To see more information about `ValuePotionManager.OnRequestPurchase`, please see **OnRequestPurchase** item under **Advanced: Event** section *
 
 ```java
-string lastProductId;
-string lastCampaignId;
-string lastContentId;
-
 ValuePotionManager.OnRequestPurchase += OnRequestPurchaseHandler;
 
 public void OnRequestPurchaseHandler(string placement, string name, string productId, int quantity, string campaignId, string contentId) {
-	lastProductId = productId;
-	lastCampaignId = campaignId;
-	lastContentId = contentId;
+  // Proceed the requested payment
 
-	// Proceed the requested payment
+  ...
 
-	...
-
-	// User purchased some Diamond item for KRW 1,200. So you're attaching productId, campaignId, contentId information of recent purchase as payment event parameters.
-	ValuePotionManager.TrackPurchaseEvent("iap_diamond", 1200, "KRW", lastProductId, lastCampaignId, lastContentId);
+  // User purchased some Diamond item for KRW 1,200.
+  String orderId = "23847983247018237";                 // The identifier of receipt after completing purchase.
+  String productId = "com.valuepotion.tester.item_01";  // The identifier of item.
+  ValuePotionManager.TrackPurchaseEvent("iap_diamond", 1200, "KRW", orderId, productId, campaignId, contentId);
 }
 ```
 
@@ -268,7 +274,7 @@ If you send events from an app built with test mode, you should see the events o
 
 
 ## Integrate User Information
-You can collect user information as well as events. Possible fields of user information are user id, server id which user belongs to, birthdate, gender, level and number of friends. All of them are optional so you can choose which fields to collect.
+You can collect user information as well as events. Possible fields of user information are user id, server id which user belongs to, birthdate, gender, level, number of friends and type of user account. All of them are optional so you can choose which fields to collect.
 
 You can use this information for marketing by creating user cohort. You can update your information when it changes to integrate with Valuepotion.
 
@@ -279,18 +285,20 @@ ValuePotionManager.SetUserBirth("19830328");
 ValuePotionManager.SetUserGender("M");
 ValuePotionManager.SetUserLevel(32);
 ValuePotionManager.SetUserFriends(219);
+ValuePotionManager.SetUserAccountType("guest");
 ```
 
 The following is the detail on each field.
 
-Field         | Description
-------------- | ------------
-**userId**    | User account id used in game
-**serverId**  | If you need to distinguish users by server which they belong to, you should set serverId.<br>Then you can get statistics based on serverId.
-**birth**     | Date of birth in YYYYMMDD. <br>If you know only year of birth, fill last four digits with "0" like "19840000".<br>If you know only date of birth(but not year), fill first four digits with "0" like "00001109".
-**gender**    | "M" for male, "F" for female.
-**level**     | Level of user in game.
-**friends**   | Number of user's friends.
+Field           | Description
+--------------- | ------------
+**userId**      | User account id used in game
+**serverId**    | If you need to distinguish users by server which they belong to, you should set serverId.<br>Then you can get statistics based on serverId.
+**birth**       | Date of birth in YYYYMMDD. <br>If you know only year of birth, fill last four digits with "0" like "19840000".<br>If you know only date of birth(but not year), fill first four digits with "0" like "00001109".
+**gender**      | "M" for male, "F" for female.
+**level**       | Level of user in game.
+**friends**     | Number of user's friends.
+**accountType** | Type of user account. (facebook, google, guest, etc.)
 
 
 ## Integrate Push Notification

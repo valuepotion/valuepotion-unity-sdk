@@ -1,5 +1,30 @@
 # Change Log
 
+## v1.0.22
+* Buil with valuepotion-android-sdk-1.0.21 and valuepotion-ios-sdk-1.0.4
+
+### Android
+#### Upgrading Issue
+
+* If you're upgrading SDK from older version to v1.0.22, you must add the following code into AndroidManifest.xml.
+  ```java
+    <application ...>
+        ...
+
+        <receiver
+            android:name="com.valuepotion.sdk.push.GcmBroadcastReceiver">
+            <intent-filter>
+                <action android:name="com.valuepotion.sdk.push.NOTIFICATION_OPENED" />
+            </intent-filter>
+        </receiver>
+
+        ...
+    </application>
+ ```
+
+### iOS
+* Fixed a bug that incorrect session measurements occasionally occur.
+
 ## v1.0.21
 * Built with valuepotion-android-sdk-1.0.20 and valuepotion-ios-sdk-1.0.3
 * New APIs
@@ -27,25 +52,25 @@
 ## v1.0.19
 * Built with valuepotion-android-sdk-1.0.18 and valuepotion-ios-sdk-1.0.2
 
-#### Android
+### Android
 * Fixed a bug that push token is not registered very occasionally.
 
 ## v1.0.18
 * Built with valuepotion-android-sdk-1.0.17 and valuepotion-ios-sdk-1.0.2
 
-#### Android
+### Android
 * Fixed a bug app crashing when users' android device does not have Google Play Services.
 
 ## v1.0.17
 * Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.2
 
-#### iOS
+### iOS
 * iOS 8 support.
 
 ## v1.0.16
 * Built with valuepotion-android-sdk-1.0.16 and valuepotion-ios-sdk-1.0.1
 
-#### Android
+### Android
 * Fixed a bug that WebView doesn’t work properly after showing interstitial ad.
 * Fixed a bug that the unity binder delivers wrong event strings.
 
@@ -53,10 +78,10 @@
 * Built with valuepotion-android-sdk-1.0.15 and valuepotion-ios-sdk-1.0.1
 * Renamed “location” to “placement” from all variables and method names.
 
-##### Android
+#### Android
 * Use Advertising Id ( https://play.google.com/intl/en/about/developer-content-policy.html )
 
-##### iOS
+#### iOS
 * Remove unneeded device identifier.
 
 ## v1.0.10

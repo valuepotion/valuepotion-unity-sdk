@@ -119,6 +119,11 @@ Unity 프로젝트의 `Assets/Plugins/Android/libs` 디렉토리에 `gcm.jar` �
 				<category android:name="PACKAGE_NAME" />
 		</intent-filter>
 </receiver>
+<receiver android:name="com.valuepotion.sdk.push.GcmBroadcastReceiver">
+    <intent-filter>
+      <action android:name="com.valuepotion.sdk.push.NOTIFICATION_OPENED" />
+    </intent-filter>
+</receiver>
 <service android:name="com.kskkbys.unitygcmplugin.UnityGCMIntentService" />
 ```
 

@@ -1,7 +1,11 @@
 # Change Log
 
+## v1.0.23
+* Built with valuepotion-android-sdk-1.0.21 and valuepotion-ios-sdk-1.0.4
+* Minor bug fix regarding plugin packaging.
+
 ## v1.0.22
-* Buil with valuepotion-android-sdk-1.0.21 and valuepotion-ios-sdk-1.0.4
+* Built with valuepotion-android-sdk-1.0.21 and valuepotion-ios-sdk-1.0.4
 
 ### Android
 #### Upgrading Issue

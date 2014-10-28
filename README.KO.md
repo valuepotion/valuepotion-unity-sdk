@@ -76,8 +76,27 @@ ValuePotionManager 오브젝트를 선택한 후, Inspector 패널로 이동하�
 <!-- Valuepotion Components End -->
 ```
 
-#### GCM 지원
+#### onStart / onStop
+앱 내에서 사용하는 모든 액티비티에 아래의 코드를 삽입해야 합니다.
 
+```java
+@Override
+protected void onStart() {
+  super.onStart();
+  ValuePotion.getInstance().onStart(this);
+}
+
+@Override
+protected void onStop() {
+  super.onStop();
+  ValuePotion.getInstance().onStop(this);
+}
+```
+
+만약에 메인 액티비티로 `UnityPlayerActivity`를 사용하고 있다면, 이를 상속받은 `MainActivity`를 만들고 그 안에 위의 내용을 구현한 뒤, `AndroidManifest.xml`에도 `UnityPlayerActivity` 대신 `MainActivity`를 사용하도록 수정하십시오.
+
+
+#### GCM 지원
 
 Valuepotion의 Unity GCM 지원은 [unity-gcm](https://github.com/kskkbys/unity-gcm) 프로젝트에 기반하고 있습니다. unity-gcm을 통해 Unity상에서 GCM Notification을 처리할 수 있고, 자동적으로 Valuepotion으로의 연동도 이루어집니다. 소스코드는 [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion)에서 확인하실 수 있습니다.
 

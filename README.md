@@ -80,8 +80,28 @@ File Name        | File Path          | Destination Path
 <!-- Valuepotion Components End -->
 ```
 
-#### Integrate with GCM
+#### onStart / onStop
+Every activity has to include the following code:
 
+```java
+@Override
+protected void onStart() {
+  super.onStart();
+  ValuePotion.getInstance().onStart(this);
+}
+
+@Override
+protected void onStop() {
+  super.onStop();
+  ValuePotion.getInstance().onStop(this);
+}
+```
+
+If you're using `UnityPlayerActivity` as your main activity, please create `MainActivity` extending `UnityPlayerActivity`. Replace it with `UnityPlayerActivity` from `AndroidManifest.xml` and add the code above into the `MainActivity`.
+
+
+
+#### Integrate with GCM
 
 Integrating with Unity GCM is based on [unity-gcm](https://github.com/kskkbys/unity-gcm) project. Via unity-gcm, we handle GCM Notification on Unity and integrate with Valuepotion.
 

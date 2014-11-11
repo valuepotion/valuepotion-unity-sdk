@@ -115,6 +115,9 @@ Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity 
 ###### Add permissions for GCM
 
 ```xml
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 <!--
 	Replace 'PACKAGE_NAME' to Your App-PackageName
 	ex)

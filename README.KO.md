@@ -110,6 +110,9 @@ Unity 프로젝트의 `Assets/Plugins/Android/libs` 디렉토리에 `gcm.jar` �
 ###### GCM 퍼미션 선언 및 등록
 
 ```xml
+<uses-permission android:name="android.permission.GET_ACCOUNTS" />
+<uses-permission android:name="android.permission.WAKE_LOCK" />
+<uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
 <!--
 	Replace 'PACKAGE_NAME' to Your App-PackageName
 	ex)

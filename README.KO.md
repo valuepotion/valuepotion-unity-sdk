@@ -33,8 +33,10 @@ ValuePotionManager 오브젝트를 선택한 후, Inspector 패널로 이동하�
 
 ###### google_play_services_version 등록
 ```xml
-<meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
+<application ...>
+...
+	<meta-data android:name="com.google.android.gms.version"
+        	android:value="@integer/google_play_services_version" />
 ```
 
 ###### 퍼미션 등록
@@ -46,34 +48,39 @@ ValuePotionManager 오브젝트를 선택한 후, Inspector 패널로 이동하�
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <!-- Valuepotion Plugin Permissions end -->
+
+<application ...>
+...
 ```
 
 ###### Valuepotion 컴포넌트 등록
 
 ```xml
-<!-- Valuepotion Components -->
+<application ...>
+...
+	<!-- Valuepotion Components -->
 	<!-- for GCM push-notification interface -->
 	<activity
-			android:name="com.valuepotion.sdk.VPPopupActivity"
-			android:launchMode="singleInstance"
-			android:theme="@android:style/Theme.Translucent" >
+	    android:name="com.valuepotion.sdk.VPPopupActivity"
+	    android:launchMode="singleInstance"
+	    android:theme="@android:style/Theme.Translucent" >
 	</activity>
 
 	<!-- for GCM Push notification interface -->
 	<activity
-			android:name="com.valuepotion.sdk.VPInterstitialActivity"
-			android:theme="@android:style/Theme.Translucent" >
+	    android:name="com.valuepotion.sdk.VPInterstitialActivity"
+	    android:theme="@android:style/Theme.Translucent" >
 	</activity>
 
 	<!-- for CPI tracking -->
 	<receiver
-			android:name="com.valuepotion.sdk.VPInstallReceiver"
-			android:exported="true" >
-			<intent-filter>
-					<action android:name="com.android.vending.INSTALL_REFERRER" />
-			</intent-filter>
+	    android:name="com.valuepotion.sdk.VPInstallReceiver"
+	    android:exported="true" >
+	    <intent-filter>
+	        <action android:name="com.android.vending.INSTALL_REFERRER" />
+	    </intent-filter>
 	</receiver>
-<!-- Valuepotion Components End -->
+	<!-- Valuepotion Components End -->
 ```
 
 #### onStart / onStop

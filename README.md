@@ -39,8 +39,10 @@ File Name        | File Path          | Destination Path
 
 ###### Add google_play_services_version.
 ```xml
-<meta-data android:name="com.google.android.gms.version"
-           android:value="@integer/google_play_services_version" />
+<application ...>
+...
+	<meta-data android:name="com.google.android.gms.version"
+        	android:value="@integer/google_play_services_version" />
 ```
 
 ###### Add permissions.
@@ -51,11 +53,16 @@ File Name        | File Path          | Destination Path
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 <!-- Valuepotion Plugin Permissions end -->
+
+<application ...>
+...
 ```
 
 ###### Add components of Valuepotion.
 ```xml
-<!-- Valuepotion Components -->
+<application ...>
+...
+	<!-- Valuepotion Components -->
 	<!-- for GCM push-notification interface -->
 	<activity
 	    android:name="com.valuepotion.sdk.VPPopupActivity"
@@ -77,7 +84,7 @@ File Name        | File Path          | Destination Path
 	        <action android:name="com.android.vending.INSTALL_REFERRER" />
 	    </intent-filter>
 	</receiver>
-<!-- Valuepotion Components End -->
+	<!-- Valuepotion Components End -->
 ```
 
 #### onStart / onStop

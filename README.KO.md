@@ -133,7 +133,7 @@ Unity 프로젝트의 `Assets/Plugins/Android/libs` 디렉토리에 `gcm.jar` �
 		then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
 -->
 <receiver android:name="com.kskkbys.unitygcmplugin.UnityGCMBroadcastReceiver"
-	andoid:permission="com.google.android.c2dm.permission.SEND"
+	android:permission="com.google.android.c2dm.permission.SEND"
 	android:exported="true">
 		<intent-filter>
 				<action android:name="com.google.android.c2dm.intent.RECEIVE" />

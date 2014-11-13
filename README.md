@@ -138,7 +138,7 @@ Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity 
     then set 'com.valuepotion.testapp.permission.C2D_MESSAGE'.
 -->
 <receiver android:name="com.kskkbys.unitygcmplugin.UnityGCMBroadcastReceiver"
-	andoid:permission="com.google.android.c2dm.permission.SEND"
+	android:permission="com.google.android.c2dm.permission.SEND"
 	android:exported="true">
     <intent-filter>
         <action android:name="com.google.android.c2dm.intent.RECEIVE" />

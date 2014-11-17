@@ -100,7 +100,8 @@ protected void onStop() {
 }
 ```
 
-만약에 메인 액티비티로 `UnityPlayerActivity`를 사용하고 있다면, 이를 상속받은 `MainActivity`를 만들고 그 안에 위의 내용을 구현한 뒤, `AndroidManifest.xml`에도 `UnityPlayerActivity` 대신 `MainActivity`를 사용하도록 수정하십시오.
+이미 `UnityPlayerActivity` 나 `UnityPlayerNativeActivity` 를 직접 상속해서 만든 activity class 파일을 사용하고 있는 경우에는 그 java 파일에 위 코드를 삽입해주기만 하면 됩니다.
+그렇지 않다면 `UnityPlayerActivity` 혹은 `UnityPlayerNativeActivity` 를 상속받는 java class 파일을 생성하고, 그 파일에 위 내용을 삽입해야 합니다. 하지만 보다 손쉽게 사용하실 수 있도록 `vpunityactivity.jar`를 제공해 드리기 때문에 그냥 `vpunityactivity.jar`를 사용하셔도 됩니다. `AndroidManifest.xml`에서 메인 액티비티의 tag 를 찾고, `android:name` 속성의 값을 `com.valuepotion.sdk.unity.android.VPUnityActivity` 로 교체해주세요.
 
 
 #### GCM 지원

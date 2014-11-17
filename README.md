@@ -104,7 +104,7 @@ protected void onStop() {
 }
 ```
 
-If you're using `UnityPlayerActivity` as your main activity, please create `MainActivity` extending `UnityPlayerActivity`. Replace it with `UnityPlayerActivity` from `AndroidManifest.xml` and add the code above into the `MainActivity`.
+If you already have your own activity class file which extends `UnityPlayerActivity` or `UnityPlayerNativeActivity`, just put the code above into your activity. Otherwise, you must create a java class file which extends `UnityPlayerActivity` or `UnityPlayerNativeActivity` in order to put the code above. However, for your convenience we provide you `vpunityactivity.jar` file in our unitypackage. From your `AndroidManifest.xml` find your main activity tag and replace the value of `android:name` attribute with `com.valuepotion.sdk.unity.android.VPUnityActivity`.
 
 
 

@@ -211,7 +211,7 @@ Using `ValuePotionManager.OpenInterstitial()` method, the SDK will download data
 
 ```java
 // If you cache an ad for "after_login" placement once,
-ValuePotionManager.CacneInterstitial("after_login");
+ValuePotionManager.CacheInterstitial("after_login");
 
 ...
 

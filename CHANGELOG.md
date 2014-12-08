@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.26
+* Built with valuepotion-android-sdk-1.0.23 and valuepotion-ios-sdk-1.0.4
+
+### Android
+* Registering gcm push token has been stabilized.
+* Improved performance of tracking custom events.
+
 ## v1.0.25
 * Built with valuepotion-android-sdk-1.0.22 and valuepotion-ios-sdk-1.0.4
 

@@ -1,5 +1,12 @@
 # Change Log
 
+## v1.0.27
+* Built with valuepotion-android-sdk-1.0.23 and valuepotion-ios-sdk-1.0.5
+
+### iOS
+* Improved stability of interstitial view.
+* Fixed a bug in campaign blocking function.
+
 ## v1.0.26
 * Built with valuepotion-android-sdk-1.0.23 and valuepotion-ios-sdk-1.0.4
 

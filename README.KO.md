@@ -47,6 +47,8 @@ ValuePotionManager 오브젝트를 선택한 후, Inspector 패널로 이동하�
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.ACCESS_WIFI_STATE" />
 <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+<uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" /> 
+<uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" /> 
 <!-- Valuepotion Plugin Permissions end -->
 
 <application ...>

@@ -286,6 +286,12 @@ public void OnRequestPurchaseHandler(string placement, string name, string produ
 }
 ```
 
+비결제 이벤트처럼 category 와 label 을 지정할 수 있습니다.
+```
+ValuePotionManager.TrackPurchaseEvent(category, eventName, label, amount, currency, orderId, productId, campaignId, contentId);
+```
+
+
 #### 참고
 * 정확한 집계를 위해, 결제 이벤트 전송 시에는 실제 발생한 결제 금액과 통화 코드를 지정해주십시오.
 * 통화 코드는 [ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) 표준을 따릅니다.

@@ -292,6 +292,11 @@ public void OnRequestPurchaseHandler(string placement, string name, string produ
 }
 ```
 
+You can also specify *category* and *label* like you did with non-payment event.
+```
+ValuePotionManager.TrackPurchaseEvent(category, eventName, label, amount, currency, orderId, productId, campaignId, contentId);
+```
+
 #### Reference
 * For accurate analysis, please specify real purchase amount and currency.
 * We follow [ISO 4217](http://en.wikipedia.org/wiki/ISO_4217) for currency.

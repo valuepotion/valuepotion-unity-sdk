@@ -1,6 +1,7 @@
 # Change Log
 
 ## v1.0.28
+* Built with valuepotion-android-sdk-1.0.24 and valuepotion-ios-sdk-1.0.6
 * You can now specify category and label for payment events.
 ```
 ValuePotionManager.TrackPurchaseEvent(category, eventName, label, amount, currency, orderId, productId, campaignId, contentId);

@@ -7,6 +7,7 @@
 
 ### Android
 * If the following code is already in your AndroidManifest.xml,
+
  ```xml
         <receiver
             android:name="com.valuepotion.sdk.push.GcmBroadcastReceiver">

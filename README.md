@@ -155,7 +155,7 @@ Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity 
         <category android:name="PACKAGE_NAME" />
     </intent-filter>
 </receiver>
-<receiver android:name="com.valuepotion.sdk.push.GcmBroadcastReceiver">
+<receiver android:name="com.valuepotion.sdk.push.NotificationOpenedReceiver">
     <intent-filter>
       <action android:name="com.valuepotion.sdk.push.NOTIFICATION_OPENED" />
     </intent-filter>

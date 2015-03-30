@@ -113,7 +113,7 @@ Valuepotion의 Unity GCM 지원은 [unity-gcm](https://github.com/kskkbys/unity-
 
 ##### gcm.jar 추가
 Unity 프로젝트의 `Assets/Plugins/Android/libs` 디렉토리에 `gcm.jar` 파일을 추가하십시오.
-해당 파일은 [이곳](https://code.google.com/p/gcm/source/browse/gcm-client/dist/gcm.jar?r=af0f427f11ec05c252d8424fffb9ff5521b59495)에서 받으실 수 있습니다.
+해당 파일은 [이곳](https://github.com/google/gcm/tree/master/gcm-client-deprecated/dist)에서 받으실 수 있습니다.
 
 ##### AndroidManifest.xml
 

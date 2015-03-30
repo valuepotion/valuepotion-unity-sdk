@@ -117,7 +117,7 @@ Integrating with Unity GCM is based on [unity-gcm](https://github.com/kskkbys/un
 You can check out source code on [unity-gcm-valuepotion](https://github.com/valuepotion/unity-gcm-valuepotion).
 
 ##### Add gcm.jar
-Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity project. You can get `gcm.jar` from [here](https://code.google.com/p/gcm/source/browse/gcm-client/dist/gcm.jar?r=af0f427f11ec05c252d8424fffb9ff5521b59495).
+Please put `gcm.jar` into `Assets/Plugins/Android/libs` directory of your Unity project. You can get `gcm.jar` from [here](https://github.com/google/gcm/tree/master/gcm-client-deprecated/dist).
 
 ##### AndroidManifest.xml
 

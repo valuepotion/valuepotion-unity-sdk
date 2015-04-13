@@ -288,7 +288,7 @@ public void OnRequestPurchaseHandler(string placement, string name, string produ
 
 비결제 이벤트처럼 category 와 label 을 지정할 수 있습니다.
 ```
-ValuePotionManager.TrackPurchaseEvent(category, eventName, label, amount, currency, orderId, productId, campaignId, contentId);
+ValuePotionManager.TrackPurchaseEvent(category, action, label, amount, currency, orderId, productId, campaignId, contentId);
 ```
 
 

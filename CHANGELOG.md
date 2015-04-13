@@ -1,5 +1,9 @@
 # Change Log
 
+## v1.0.30
+* Built with valuepotion-android-sdk-1.0.26 and valuepotion-ios-sdk-1.0.7
+* Minor bug fixes
+
 ## v1.0.29
 * Built with valuepotion-android-sdk-1.0.25 and valuepotion-ios-sdk-1.0.7
 * Minor bug fixes

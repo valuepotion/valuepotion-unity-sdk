@@ -294,7 +294,7 @@ public void OnRequestPurchaseHandler(string placement, string name, string produ
 
 You can also specify *category* and *label* like you did with non-payment event.
 ```
-ValuePotionManager.TrackPurchaseEvent(category, eventName, label, amount, currency, orderId, productId, campaignId, contentId);
+ValuePotionManager.TrackPurchaseEvent(category, action, label, amount, currency, orderId, productId, campaignId, contentId);
 ```
 
 #### Reference
